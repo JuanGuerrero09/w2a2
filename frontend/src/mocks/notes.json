@@ -1,3 +1,24 @@
+[{
+    "_id": {
+        "$oid": "640958b656bb73c4ede7024d"
+    },
+    "title": "nota de prueba 4 ahora editada",
+    "text": "and with text",
+    "createdAt": {
+        "$date": {
+            "$numberLong": "1678115446657"
+        }
+    },
+    "updatedAt": {
+        "$date": {
+            "$numberLong": "1678286486276"
+        }
+    },
+    "__v": {
+        "$numberInt": "0"
+    }
+}
+,
 {
     "_id": {
         "$oid": "640958b656bb73c4ede7024d"
@@ -18,3 +39,4 @@
         "$numberInt": "0"
     }
 }
+]
