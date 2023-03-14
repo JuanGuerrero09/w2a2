@@ -10,10 +10,14 @@
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
+    "framer-motion": "^10.2.5",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-countdown": "^2.3.5",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.43.5",
+    "react-icons": "^4.8.0",
+    "react-router-dom": "^6.9.0",
     "wouter": "^2.10.0"
   },
   "devDependencies": {
