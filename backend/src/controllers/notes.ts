@@ -19,13 +19,18 @@ interface CreateNoteBody {
 export const createNote: RequestHandler<unknown, unknown, CreateNoteBody, unknown> = async (req, res, next) => {
     const title = req.body.title
     const text = req.body.text
+    const author = req.session.userId
     try {
+        if(!author){
+            throw createHttpError(409, 'You need to be authenticated to create notes')
+        }
         if(!title){
             throw createHttpError(401, 'No title added')
         }
         const newNote = await NoteModel.create({
             title,
-            text
+            text,
+            author
         })
         //TODO Shared with and author
         res.status(201).json(newNote)
