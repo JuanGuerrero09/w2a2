@@ -1,7 +1,7 @@
 import { Form, Container, Button } from "react-bootstrap";
-import SignUpStyles from "../../styles/LoginSignUpPages.module.css";
-import WorldIcon from "../icons/WorldIcon";
-import FormInputField from "../form/FormInputField";
+import SignUpStyles from "../styles/LoginSignUpPages.module.css";
+import WorldIcon from "../components/icons/WorldIcon";
+import FormInputField from "../components/form/FormInputField";
 import { useForm } from "react-hook-form";
 
 //TODO Change for the notes_api interface
