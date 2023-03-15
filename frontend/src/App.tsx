@@ -7,9 +7,9 @@ import {
   useNavigate,
 } from "react-router-dom";
 import Counter from "./components/counters/Counter";
-import WelcomePage from "./components/pages/WelcomePage";
-import SignUpPage from "./components/pages/SignUpPage";
-import LoginPage from "./components/pages/LoginPage";
+import WelcomePage from "./pages/WelcomePage";
+import SignUpPage from "./pages/SignUpPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
