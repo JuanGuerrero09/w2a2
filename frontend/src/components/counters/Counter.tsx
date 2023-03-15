@@ -6,7 +6,7 @@ export default function Counter() {
   return (
     <>
     {/* <h1>Time left </h1> */}
-    <h3><Countdown date={iLeave} /></h3>
+    <h3 style={{position: "absolute", top: 0}}><Countdown date={iLeave} /></h3>
     </>
   );
 }

@@ -1,0 +1,24 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.textContainer{
+    margin-top: 0.8rem;
+    width: 100vw;
+    text-align: center;
+}
+
+.form{
+    width: 300px;
+}
+
+.form > button {
+    margin-top: 1rem;
+    margin-bottom: 100px;
+    width: 300px;
+}
