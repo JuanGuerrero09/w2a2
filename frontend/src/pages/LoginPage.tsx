@@ -21,34 +21,57 @@ export default function LoginPage() {
     watch,
   } = useForm<LoginFields>();
   const [user, setUser] = useState<UserModel | null>(null);
-  const [error, setError] = useState('')
+  const [error, setError] = useState("");
   const onSubmit = (data: LoginFields) => {
-    console.log(data)
-    login(data)
+    console.log(data);
+    login(data);
   };
 
-  async function login(data:LoginFields) {
+  async function login(data: LoginFields) {
     try {
       const user = await Api.login(data);
+      console.log(user);
       setUser(user);
     } catch (error) {
       console.error(error);
-      setUser(null)
-      setError('Invalid log in')
+      setUser(null);
+      setError("Invalid log in");
     }
   }
-  // useEffect(() => {
-  //   login()
-  // }, []);
 
+  async function logout(){
+    try {
+      await Api.logOut()
+      setUser(null)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  useEffect(() => {
+    async function loggedUser() {
+      try {
+        const user = await Api.getLoggedUser();
+        setUser(user);
+      } catch (error) {
+        console.error(error);
+        setUser(null);
+        setError("No user logged");
+      }
+    }
+    loggedUser()
+  }, []);
 
   return (
     <>
       <main className={LoginStyles.container}>
-      
-      {user 
-      ?<p>{`${user?.email} ${user?.username}`}</p>
-      :<p style={{color:'red'}}>{error}</p>}
+        {user ? (
+          <p>{`${user?.email} ${user?.username}`}</p>
+        ) : (
+          <>
+          <p style={{ color: "red" }}>{error}</p>
+          <p style={{ color: "red" }}>{'please log in'}</p>
+          </>
+        )}
         <WorldIcon />
         <Container fluid className={LoginStyles.textContainer}>
           <h1>Welcome Back</h1>
@@ -83,6 +106,7 @@ export default function LoginPage() {
             Log In
           </Button>
         </Form>
+        <Button onClick={logout}>Log out</Button>
       </main>
     </>
   );

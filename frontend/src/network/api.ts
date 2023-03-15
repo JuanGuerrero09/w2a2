@@ -13,7 +13,7 @@ async function fetchData(input: RequestInfo, init?: RequestInit) {
 }
 
 export async function getLoggedUser(): Promise<UserModel> {
-    const response = await fetchData('http://localhost:8000/api/users', { method: 'GET'})
+    const response = await fetchData('api/users', { method: 'GET'})
     return response.json()
 }
 
@@ -23,7 +23,7 @@ interface LoginCredentials{
 }
 
 export async function login(credentials: LoginCredentials){
-    const response = await fetchData('http://localhost:8000/api/users/login', {
+    const response = await fetchData('api/users/login', {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
@@ -31,4 +31,10 @@ export async function login(credentials: LoginCredentials){
         body: JSON.stringify(credentials),
     })
     return response.json()
+}
+
+export async function logOut(){
+    await fetchData('api/users/logout',{
+        method: 'POST'
+    })
 }
