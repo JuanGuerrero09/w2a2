@@ -1,14 +1,13 @@
-import { Form, Container, Button } from "react-bootstrap";
-import LoginStyles from "../styles/LoginSignUpPages.module.css";
-import WorldIcon from "../components/icons/WorldIcon";
-import FormInputField from "../components/form/FormInputField";
+import { useEffect } from "react";
+import { Button, Container, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { useState, useEffect } from "react";
-import * as Api from "../network/api";
-import { UserModel } from "../models/user";
+import FormInputField from "../components/form/FormInputField";
+import WorldIcon from "../components/icons/WorldIcon";
+import { useUser } from "../hooks/useUser";
+import LoginStyles from "../styles/LoginSignUpPages.module.css";
 
 //TODO Change for the notes_api interface
-interface LoginFields {
+export interface LoginFields {
   username: string;
   password: string;
 }
@@ -20,45 +19,13 @@ export default function LoginPage() {
     formState: { errors, isSubmitting },
     watch,
   } = useForm<LoginFields>();
-  const [user, setUser] = useState<UserModel | null>(null);
-  const [error, setError] = useState("");
+  const { user, login, logout, getLoggedUser, error } = useUser();
   const onSubmit = (data: LoginFields) => {
-    console.log(data);
     login(data);
   };
 
-  async function login(data: LoginFields) {
-    try {
-      const user = await Api.login(data);
-      console.log(user);
-      setUser(user);
-    } catch (error) {
-      console.error(error);
-      setUser(null);
-      setError("Invalid log in");
-    }
-  }
-
-  async function logout(){
-    try {
-      await Api.logOut()
-      setUser(null)
-    } catch (error) {
-      console.error(error)
-    }
-  }
   useEffect(() => {
-    async function loggedUser() {
-      try {
-        const user = await Api.getLoggedUser();
-        setUser(user);
-      } catch (error) {
-        console.error(error);
-        setUser(null);
-        setError("No user logged");
-      }
-    }
-    loggedUser()
+    getLoggedUser();
   }, []);
 
   return (
@@ -68,8 +35,8 @@ export default function LoginPage() {
           <p>{`${user?.email} ${user?.username}`}</p>
         ) : (
           <>
-          <p style={{ color: "red" }}>{error}</p>
-          <p style={{ color: "red" }}>{'please log in'}</p>
+            <p style={{ color: "red" }}>{error}</p>
+            <p style={{ color: "red" }}>{"please log in"}</p>
           </>
         )}
         <WorldIcon />
