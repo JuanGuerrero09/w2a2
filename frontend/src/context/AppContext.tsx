@@ -8,7 +8,7 @@ import { useUser } from '../hooks/useUser';
 //     isLoggedIn: false
 // }
 
-const AppContext = createContext(null as any)
+export const AppContext = createContext(null as any)
 
 type Props = {
     children: React.ReactNode;

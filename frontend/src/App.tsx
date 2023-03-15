@@ -1,26 +1,40 @@
-import "./App.css";
+import { useContext, useEffect } from "react";
+import { Button } from "react-bootstrap";
 import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-  useNavigate,
+    BrowserRouter,
+    Route,
+    Routes
 } from "react-router-dom";
+import "./App.css";
 import Counter from "./components/counters/Counter";
-import WelcomePage from "./pages/WelcomePage";
-import SignUpPage from "./pages/SignUpPage";
+import { AppContext } from "./context/AppContext";
+import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
+import WelcomePage from "./pages/WelcomePage";
 
 function App() {
+  const { user, getLoggedUser } = useContext(AppContext);
+
+  const handleShowUser = () => {
+    console.log(user);
+  };
+
+  useEffect(() => {
+    getLoggedUser();
+  }, []);
+
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<WelcomePage />} />
+          <Route path="/" element={!user ? <WelcomePage /> : <Home />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/home" element={user ? <Home /> : <WelcomePage />} />
         </Routes>
       </BrowserRouter>
+      <Button onClick={handleShowUser}>Show user</Button>
       <Counter />
     </>
   );

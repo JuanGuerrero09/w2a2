@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useContext } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import FormInputField from "../components/form/FormInputField";
 import WorldIcon from "../components/icons/WorldIcon";
-import { useUser } from "../hooks/useUser";
+import { AppContext } from "../context/AppContext";
 import LoginStyles from "../styles/LoginSignUpPages.module.css";
 
 //TODO Change for the notes_api interface
@@ -13,26 +14,29 @@ export interface LoginFields {
 }
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     watch,
   } = useForm<LoginFields>();
-  const { user, login, logout, getLoggedUser, error } = useUser();
-  const onSubmit = (data: LoginFields) => {
-    login(data);
-  };
+  const { user, login, logout, error } = useContext(AppContext);
 
-  useEffect(() => {
-    getLoggedUser();
-  }, []);
+  const onSubmit = async (data: LoginFields) => {
+    try {
+      await login(data);
+      navigate("/home");
+    } catch (error) {}
+  };
 
   return (
     <>
       <main className={LoginStyles.container}>
         {user ? (
-          <p>{`${user?.email} ${user?.username}`}</p>
+          <>
+            <p>{`${user?.email} ${user?.username}`}</p>
+          </>
         ) : (
           <>
             <p style={{ color: "red" }}>{error}</p>
@@ -73,7 +77,6 @@ export default function LoginPage() {
             Log In
           </Button>
         </Form>
-        <Button onClick={logout}>Log out</Button>
       </main>
     </>
   );
