@@ -2,6 +2,7 @@ import { useState } from "react";
 import { UserModel } from "../models/user";
 import * as Api from "../network/api";
 import { LoginFields } from "../pages/LoginPage";
+import {SignUpFields} from '../pages/SignUpPage'
 
 export function useUser() {
   const [user, setUser] = useState<UserModel | null>(null);
@@ -15,6 +16,17 @@ export function useUser() {
       console.error(error);
       setUser(null);
       setError("Invalid log in");
+    }
+  }
+
+  async function signUp(data: SignUpFields) {
+    try {
+      const user: UserModel = await Api.signUp(data);
+      setUser(user);
+    } catch (error) {
+      console.error(error);
+      setUser(null);
+      setError("Faild creating user");
     }
   }
 
@@ -38,5 +50,5 @@ export function useUser() {
     }
   }
 
-  return { user, error, login, logout, getLoggedUser };
+  return { user, error, login, logout, signUp, getLoggedUser };
 }

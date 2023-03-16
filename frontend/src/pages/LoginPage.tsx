@@ -21,7 +21,7 @@ export default function LoginPage() {
     formState: { errors, isSubmitting },
     watch,
   } = useForm<LoginFields>();
-  const { user, login, logout, error } = useContext(AppContext);
+  const { login } = useContext(AppContext);
 
   const onSubmit = async (data: LoginFields) => {
     try {
@@ -33,16 +33,7 @@ export default function LoginPage() {
   return (
     <>
       <main className={LoginStyles.container}>
-        {user ? (
-          <>
-            <p>{`${user?.email} ${user?.username}`}</p>
-          </>
-        ) : (
-          <>
-            <p style={{ color: "red" }}>{error}</p>
-            <p style={{ color: "red" }}>{"please log in"}</p>
-          </>
-        )}
+        {/* TODO ADD ERROR MESSAGE WHEN LOGIN WENT WRONG */}
         <WorldIcon />
         <Container fluid className={LoginStyles.textContainer}>
           <h1>Welcome Back</h1>

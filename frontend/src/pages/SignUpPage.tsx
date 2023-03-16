@@ -3,22 +3,34 @@ import SignUpStyles from "../styles/LoginSignUpPages.module.css";
 import WorldIcon from "../components/icons/WorldIcon";
 import FormInputField from "../components/form/FormInputField";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 //TODO Change for the notes_api interface
-interface SignUpFields {
+export interface SignUpFields {
   username: string;
   email: string;
   password: string;
 }
 
 export default function SignUpPage() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     watch,
   } = useForm<SignUpFields>();
-  const onSubmit = (data: SignUpFields) => console.log(data);
+  const { signUp } = useContext(AppContext);
+  const onSubmit = async (data: SignUpFields) => {
+    try {
+      await signUp(data)
+      navigate('/home')
+    } catch (error) {
+      console.error(error)
+    }
+  };
   return (
     <>
       <main className={SignUpStyles.container}>

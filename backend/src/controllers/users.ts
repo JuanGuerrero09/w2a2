@@ -31,19 +31,19 @@ export const signUp: RequestHandler<unknown, unknown, SignUpBody, unknown> =asyn
         if (!username || !email || !password){
             throw createHttpError(400, 'Parameters missing')
         }
-        const existingUsername = await UserModel.findOne({username: username}).exec()
+        const existingUsername = await UserModel.findOne({username}).exec()
         if (existingUsername){
             throw createHttpError(409, 'Username already taken. Please choose a different one or log in instead.')
         }
-        const existingEmail = await UserModel.findOne({email: email}).exec()
+        const existingEmail = await UserModel.findOne({email}).exec()
         if (existingEmail){
             throw createHttpError(409, 'An account with that email already exist, please log in instead')
         }
         const cryptedPassword = await bcrypt.hash(password, 10)
 
         const newUser = await UserModel.create({
-            username: username,
-            email: email,
+            username,
+            email,
             password: cryptedPassword,
         })
 

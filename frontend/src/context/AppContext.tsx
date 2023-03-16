@@ -16,10 +16,10 @@ type Props = {
 
 export default function AppProvider({children} : Props){
 
-    const {user, error, login, logout, getLoggedUser} = useUser()
+    const {user, error, login, logout, signUp, getLoggedUser} = useUser()
 
     return (
-        <AppContext.Provider value={{user, error, login, logout, getLoggedUser}}>
+        <AppContext.Provider value={{user, error, login, logout, signUp, getLoggedUser}}>
             {children}
         </AppContext.Provider>
     )

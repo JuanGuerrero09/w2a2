@@ -38,3 +38,27 @@ export async function logOut(){
         method: 'POST'
     })
 }
+
+interface SignUpCredentials {
+    username: string, 
+    email: string,
+    password: string
+}
+
+export async function signUp(credentials: SignUpCredentials){
+    const response = await fetchData('api/users/signup', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+    })
+    return response.json()
+}
+
+export async function getNotes(){
+    const response = await fetchData('api/notes', {
+        method: 'GET'
+    })
+    return response.json()
+}
