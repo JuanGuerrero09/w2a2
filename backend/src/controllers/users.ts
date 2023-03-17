@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt'
 
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
     const currentUserId = req.session.userId
+    console.log(currentUserId)
     try {
         if(!currentUserId){
             throw createHttpError(401, 'User not authenticated')
@@ -47,9 +48,9 @@ export const signUp: RequestHandler<unknown, unknown, SignUpBody, unknown> =asyn
             password: cryptedPassword,
         })
 
-        console.log('were here')
-
         req.session.userId = newUser._id
+
+        console.log(req.session.userId)
 
         res.status(201).json(newUser)
 
