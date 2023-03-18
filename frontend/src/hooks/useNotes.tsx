@@ -13,9 +13,38 @@ export function useNotes() {
     } catch (error) {
       console.error(error);
       setNotes(null);
-      setError("Invalid log in");
+      setError("Notes not found");
     }
   }
 
-  return {notes, getNotes};
+  async function createNote(note: NoteModel) {
+    try {
+      const noteCreated = await Api.createNote(note);
+      setNotes(notes => [...notes as NoteModel[], noteCreated])
+    } catch (error) {
+        console.error(error);
+        setNotes(null);
+        setError("Notes not found");
+    }
+  }
+
+  async function updateNote() {
+    try {
+    } catch (error) {
+      console.error(error);
+      setNotes(null);
+      setError("Note not found");
+    }
+  }
+
+  async function deleteNote() {
+    try {
+    } catch (error) {
+      console.error(error);
+      setNotes(null);
+      setError("Note not deleted");
+    }
+  }
+
+  return { notes, getNotes };
 }

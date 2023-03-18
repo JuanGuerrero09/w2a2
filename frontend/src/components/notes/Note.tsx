@@ -2,29 +2,42 @@ import { Card } from "react-bootstrap"
 import { NoteModel } from "../../models/note"
 import styles from "../../styles/Note.module.css";
 // import stylesUtils from '../styles/utils.module.css'
-// import { formatDate } from "../utils/formatDate";
+import { formatDate } from "../../utils/dateFunctions";
 import { MdDelete } from 'react-icons/md'
+import { useNavigate } from "react-router-dom";
 
 interface NoteProps {
   note: NoteModel,
-  onNoteClicked?: (note:NoteModel) => void,
+  onClickEvent: 'openModal' | 'openNotesPage',
   onDeleteNoteClick?: (note: NoteModel) => void,
   className?: string
 }
 
-export default function Note({ note }:NoteProps) {
+export default function Note({ note, onClickEvent }:NoteProps) {
   const {title, text, createdAt, updatedAt, _id } = note
 
-  // let createdUpdatedText:string
+  let createdUpdatedText:string
+  const navigate = useNavigate();
 
-//   if (updatedAt > createdAt){
-//     createdUpdatedText = 'Updated: ' + formatDate(updatedAt)
-//   } else{
-//     createdUpdatedText = 'Created at: ' + formatDate(createdAt)
-//   }
+
+  if (updatedAt > createdAt){
+    createdUpdatedText = 'Updated: ' + formatDate(updatedAt)
+  } else{
+    createdUpdatedText = 'Created at: ' + formatDate(createdAt)
+  }
+
+  const onClickHandler = (onClickEvent :'openModal' | 'openNotesPage') => (event:React.MouseEvent) => {
+    event.preventDefault()
+    if (onClickEvent === 'openModal'){
+      return 
+    }
+    if (onClickEvent === 'openNotesPage'){
+      navigate('/notes')
+    }
+  }
 
   return (
-    <Card className={`${styles.noteCard}`} >
+    <Card onClick={onClickHandler(onClickEvent)} className={`${styles.noteCard}`} >
       <Card.Body className={styles.cardBody}>
         <Card.Title >
           {title}
@@ -35,7 +48,7 @@ export default function Note({ note }:NoteProps) {
         </Card.Title>
         <Card.Text className={styles.cardText}>{text}</Card.Text>
       </Card.Body>
-        {/* <Card.Footer className="text-muted">{createdUpdatedText}</Card.Footer> */}
+        <Card.Footer className="text-muted">{createdUpdatedText}</Card.Footer>
     </Card>
   )
 }

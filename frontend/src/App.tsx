@@ -12,6 +12,7 @@ import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import WelcomePage from "./pages/WelcomePage";
+import NotesPage from "./pages/NotesPage";
 
 function App() {
   const { user, getLoggedUser, notes, getNotes } = useContext(AppContext);
@@ -22,17 +23,19 @@ function App() {
 
   useEffect(() => {
     getLoggedUser()
-    getNotes();
+    // getNotes();
   }, []);
 
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={!user ? <WelcomePage /> : <Home />} />
+          {/* <Route path="/" element={!user ? <WelcomePage /> : <Home />} />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/home" element={user ? <Home /> : <WelcomePage />} />
+          <Route path="/login" element={<LoginPage />} /> */}
+          {/* <Route path="/home" element={user ? <Home /> : <WelcomePage />} /> */}
+          <Route path="/home" element={<Home />} />
+          <Route path="/notes" element={<NotesPage />} />
         </Routes>
       </BrowserRouter>
       <Button onClick={handleShowUser}>Show user</Button>
