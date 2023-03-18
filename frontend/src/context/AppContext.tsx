@@ -1,5 +1,6 @@
-import { createContext } from 'react';
-import { useUser } from '../hooks/useUser';
+import { createContext } from "react";
+import { useUser } from "../hooks/useUser";
+import { useNotes } from "../hooks/useNotes";
 
 //TODO IMPLEMENT THIS IF APP SCALE
 // const initialState:AppState = {
@@ -8,19 +9,30 @@ import { useUser } from '../hooks/useUser';
 //     isLoggedIn: false
 // }
 
-export const AppContext = createContext(null as any)
+export const AppContext = createContext(null as any);
 
 type Props = {
-    children: React.ReactNode;
-  };
+  children: React.ReactNode;
+};
 
-export default function AppProvider({children} : Props){
+export default function AppProvider({ children }: Props) {
+  const { user, error, login, logout, signUp, getLoggedUser } = useUser();
+  const { notes, getNotes } = useNotes();
 
-    const {user, error, login, logout, signUp, getLoggedUser} = useUser()
-
-    return (
-        <AppContext.Provider value={{user, error, login, logout, signUp, getLoggedUser}}>
-            {children}
-        </AppContext.Provider>
-    )
+  return (
+    <AppContext.Provider
+      value={{
+        user,
+        error,
+        login,
+        logout,
+        signUp,
+        getLoggedUser,
+        notes,
+        getNotes,
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
 }

@@ -14,14 +14,15 @@ import SignUpPage from "./pages/SignUpPage";
 import WelcomePage from "./pages/WelcomePage";
 
 function App() {
-  const { user, getLoggedUser } = useContext(AppContext);
+  const { user, getLoggedUser, notes, getNotes } = useContext(AppContext);
 
   const handleShowUser = () => {
-    console.log(user);
+    console.log(user, notes);
   };
 
   useEffect(() => {
-    getLoggedUser();
+    getLoggedUser()
+    getNotes();
   }, []);
 
   return (

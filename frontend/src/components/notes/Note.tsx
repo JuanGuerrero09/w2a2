@@ -3,7 +3,7 @@ import { NoteModel } from "../../models/note"
 import styles from "../../styles/Note.module.css";
 // import stylesUtils from '../styles/utils.module.css'
 // import { formatDate } from "../utils/formatDate";
-// import { MdDelete } from 'react-icons/md'
+import { MdDelete } from 'react-icons/md'
 
 interface NoteProps {
   note: NoteModel,
@@ -13,7 +13,7 @@ interface NoteProps {
 }
 
 export default function Note({ note }:NoteProps) {
-  const {title, text } = note
+  const {title, text, createdAt, updatedAt, _id } = note
 
   // let createdUpdatedText:string
 
@@ -27,13 +27,13 @@ export default function Note({ note }:NoteProps) {
     <Card className={`${styles.noteCard}`} >
       <Card.Body className={styles.cardBody}>
         <Card.Title >
-          Hola mundo
-          {/* <MdDelete className="text-muted ms-auto" onClick={(e) => {
-            onDeleteNoteClick(note)
+          {title}
+          <MdDelete className="text-muted ms-auto" onClick={(e) => {
+            console.log('note clicked' + _id)
             e.stopPropagation()
-            } }/> */}
+            } }/>
         </Card.Title>
-        <Card.Text className={styles.cardText}>Hola mundo</Card.Text>
+        <Card.Text className={styles.cardText}>{text}</Card.Text>
       </Card.Body>
         {/* <Card.Footer className="text-muted">{createdUpdatedText}</Card.Footer> */}
     </Card>

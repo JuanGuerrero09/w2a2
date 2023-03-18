@@ -1,4 +1,6 @@
 import { UserModel} from '../models/user'
+import { NoteModel } from '../models/note'
+
 
 async function fetchData(input: RequestInfo, init?: RequestInit) {
     const response = await fetch(input, init)
@@ -56,9 +58,40 @@ export async function signUp(credentials: SignUpCredentials){
     return response.json()
 }
 
-export async function getNotes(){
+export async function getNotes(): Promise<NoteModel[]>{
     const response = await fetchData('api/notes', {
         method: 'GET'
     })
     return response.json()
+}
+
+interface NoteInput {
+    title: string,
+    text?: string
+}
+
+export async function createNote(note: NoteInput): Promise<NoteModel>{
+    const response = await fetchData('api/notes/', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(note),
+    })
+    return response.json()
+}
+
+export async function updateNote(noteId: string ,note: SignUpCredentials): Promise<NoteModel>{
+    const response = await fetchData(`api/users/signup/${noteId}`, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(note),
+    })
+    return response.json()
+}
+
+export async function deleteNote(noteId: string){
+    await fetchData("/api/notes/" + noteId, { method: "DELETE" });
 }

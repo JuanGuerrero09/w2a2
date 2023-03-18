@@ -15,7 +15,7 @@ const note:NoteModel = {
 }
 
 export default function Home() {
-  const { user, logout } = useContext(AppContext);
+  const { user, logout, notes } = useContext(AppContext);
   const navigate = useNavigate();
   const handleLogOut = async () => {
     try {
@@ -30,7 +30,11 @@ export default function Home() {
         Hello <strong>{user?.username}</strong>
       </h1>
       <Button onClick={handleLogOut}>Log out</Button>
-      <Note note={note}/>
+      {notes.map((note:NoteModel) => {
+        return(
+          <Note key={note._id} note={note}/>
+        )
+      })}
     </>
   );
 }
