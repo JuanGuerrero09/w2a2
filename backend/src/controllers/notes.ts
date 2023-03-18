@@ -15,6 +15,18 @@ export const getNotes:RequestHandler = async (req, res, next) => {
     }
 }
 
+export const getSharedNotes:RequestHandler = async (req, res, next) => {
+
+    const loggedUserId = req.session?.userId
+
+    try {
+        const notes = await NoteModel.find({sharedWith: loggedUserId}).exec()
+        res.status(200).json(notes)
+    } catch (error) {
+        next(error)
+    }
+}
+
 interface CreateNoteBody {
     title: 'string',
     text?: 'string'
@@ -56,7 +68,7 @@ export const updateNote: RequestHandler<UpdateNoteParams, unknown, UpdateNoteBod
     const noteId = req.params.noteId
     const newTitle = req.body.title
     const newText = req.body.text
-    const loggedUserId = req.session.userId
+    // const loggedUserId = req.session.userId
 
     try {
 
@@ -92,4 +104,30 @@ export const updateNote: RequestHandler<UpdateNoteParams, unknown, UpdateNoteBod
 
 }
 
-// export const deleteNote: RequestHandler<unknown, unknown, CreateNoteBody, unknown> = async (req, res, next) => {}
+export const deleteNote: RequestHandler = async (req, res, next) => {
+    const noteId = req.params.noteId
+    // const authenticatedUserId = req.session.userId;
+
+    try {
+        if (!mongoose.isValidObjectId(noteId)) {
+            throw createHttpError(400, "Invalid note id");
+        }
+
+        const note = await NoteModel.findById(noteId).exec()
+
+        if(!note){
+            throw createHttpError(404, 'Note not found')
+        }
+
+        // if (!note.userId.equals(authenticatedUserId)) {
+        //     throw createHttpError(401, "You cannot access this note");
+        // }
+
+        await note.deleteOne()
+
+        res.status(204).json({"response": "note successfully deleted"})
+
+    } catch (error) {
+        next(error)
+    }
+}
