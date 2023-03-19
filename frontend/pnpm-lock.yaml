@@ -10,6 +10,7 @@ specifiers:
   react-bootstrap: ^2.7.2
   react-countdown: ^2.3.5
   react-dom: ^18.2.0
+  react-floating-action-button: ^1.0.5
   react-hook-form: ^7.43.5
   react-icons: ^4.8.0
   react-router-dom: ^6.9.0
@@ -24,6 +25,7 @@ dependencies:
   react-bootstrap: 2.7.2_zula6vjvt3wdocc4mwcxqa6nzi
   react-countdown: 2.3.5_biqbaboplfbrettd7655fr4n2y
   react-dom: 18.2.0_react@18.2.0
+  react-floating-action-button: 1.0.5_react@18.2.0
   react-hook-form: 7.43.5_react@18.2.0
   react-icons: 4.8.0_react@18.2.0
   react-router-dom: 6.9.0_biqbaboplfbrettd7655fr4n2y
@@ -711,6 +713,14 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-floating-action-button/1.0.5_react@18.2.0:
+    resolution: {integrity: sha512-r90Z0AisadYzBvQJ8qGAYkU+b4DtH7V1xO4OhoGYy+u+R4aytBY5rnmTfoTtjEyqIdMTyCDD5XOpngl1vcbkBg==}
+    peerDependencies:
+      react: ^16.4.0
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-hook-form/7.43.5_react@18.2.0:

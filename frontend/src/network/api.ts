@@ -65,7 +65,7 @@ export async function getNotes(): Promise<NoteModel[]>{
     return response.json()
 }
 
-interface NoteInput {
+export interface NoteInput {
     title: string,
     text?: string
 }
@@ -81,7 +81,7 @@ export async function createNote(note: NoteInput): Promise<NoteModel>{
     return response.json()
 }
 
-export async function updateNote(noteId: string ,note: SignUpCredentials): Promise<NoteModel>{
+export async function updateNote(noteId: string ,note: NoteInput): Promise<NoteModel>{
     const response = await fetchData(`api/users/signup/${noteId}`, {
         method: 'PATCH',
         headers: {

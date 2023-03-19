@@ -28,8 +28,15 @@ export function useNotes() {
     }
   }
 
-  async function updateNote() {
+  interface UpdateNoteParams{
+    note: Api.NoteInput,
+    noteId: string
+  }
+
+  async function updateNote({noteId, note}: UpdateNoteParams) {
     try {
+      const noteUpdated = await Api.updateNote(noteId, note)
+      setNotes(notes?.map(existingNote => existingNote._id === noteUpdated._id ? noteUpdated : existingNote))
     } catch (error) {
       console.error(error);
       setNotes(null);
@@ -48,5 +55,5 @@ export function useNotes() {
     }
   }
 
-  return { notes, getNotes };
+  return { notes, getNotes, deleteNote };
 }

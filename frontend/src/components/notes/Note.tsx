@@ -1,11 +1,15 @@
-import { Card, Modal, Button } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { NoteModel } from "../../models/note";
 import styles from "../../styles/Note.module.css";
 // import stylesUtils from '../styles/utils.module.css'
-import { formatDate } from "../../utils/dateFunctions";
-import { MdDelete } from "react-icons/md";
+import { useContext, useState } from "react";
+import { MdDelete, MdEditDocument } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { formatDate } from "../../utils/dateFunctions";
+import NoteModal from "./NoteModal";
+import { AppContext } from "../../context/AppContext";
+import AddEditNoteModal from "./AddEditNoteModal";
+import { EditNoteIcon } from "../icons/AddEditNoteIcon";
 
 interface NoteProps {
   note: NoteModel;
@@ -16,9 +20,14 @@ interface NoteProps {
 
 export default function Note({ note, onClickEvent }: NoteProps) {
   const { title, text, createdAt, updatedAt, _id } = note;
+  const { deleteNote } = useContext(AppContext);
   const [show, setShow] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false)
+    isEditing? setIsEditing(false): isEditing
+  };
   const handleShow = () => setShow(true);
 
   let createdUpdatedText: string;
@@ -51,34 +60,40 @@ export default function Note({ note, onClickEvent }: NoteProps) {
         <Card.Body className={styles.cardBody}>
           <Card.Title className={styles.cardTitle}>
             {title}
-            <MdDelete
-              className="text-muted ms-auto"
+            <aside className="text-muted ms-auto">
+              <MdEditDocument 
               onClick={(e) => {
                 console.log("note clicked" + _id);
                 e.stopPropagation();
+                setIsEditing(true)
               }}
-            />
+              />
+              <MdDelete
+                onClick={(e) => {
+                  console.log("note clicked" + _id);
+                  e.stopPropagation();
+                }}
+              />
+            </aside>
           </Card.Title>
           <Card.Text className={styles.cardText}>{text}</Card.Text>
         </Card.Body>
         <Card.Footer className="text-muted">{createdUpdatedText}</Card.Footer>
       </Card>
 
-      <Modal centered show={show} onHide={handleClose}>
-        <Modal.Header className={`${styles.noteModal}`} closeButton>
-          <Modal.Title>{title}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className={`${styles.noteModal}`}>{text}</Modal.Body>
-        <Modal.Footer className={`${styles.noteModal}`}>
-        {createdUpdatedText}
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <AddEditNoteModal
+        isEditing
+        handleClose={handleClose}
+        show={isEditing}
+        text={text}
+        title={title}
+      />
+      <NoteModal
+        handleClose={handleClose}
+        show={show}
+        text={text}
+        title={title}
+      />
     </>
   );
 }

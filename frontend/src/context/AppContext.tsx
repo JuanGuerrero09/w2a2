@@ -17,7 +17,7 @@ type Props = {
 
 export default function AppProvider({ children }: Props) {
   const { user, error, login, logout, signUp, getLoggedUser } = useUser();
-  const { notes, getNotes } = useNotes();
+  const { notes, getNotes, deleteNote } = useNotes();
 
   return (
     <AppContext.Provider
@@ -30,6 +30,7 @@ export default function AppProvider({ children }: Props) {
         getLoggedUser,
         notes,
         getNotes,
+        deleteNote,
       }}
     >
       {children}
