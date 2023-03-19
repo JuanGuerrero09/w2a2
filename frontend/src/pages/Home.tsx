@@ -3,17 +3,18 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import Note from "../components/notes/Note";
-import notes from '../mocks/notes.json'
+import notes from "../mocks/notes.json";
 import { NoteModel } from "../models/note";
 import { getLastNote } from "../utils/dateFunctions";
+import HomeStyles from "../styles/Home.module.css";
 
-const note:NoteModel = {
-  title: 'Hola mundo',
-  text: 'Soy el texto de la primera nota',
-  _id: '213121',
-  createdAt: 'today',
-  updatedAt: 'tomorrow'
-}
+const note: NoteModel = {
+  title: "Hola mundo",
+  text: "Soy el texto de la primera nota",
+  _id: "213121",
+  createdAt: "today",
+  updatedAt: "tomorrow",
+};
 
 export default function Home() {
   const { user, logout } = useContext(AppContext);
@@ -22,25 +23,30 @@ export default function Home() {
     try {
       await logout();
       navigate("/");
-    } catch (error) {
-    }
+    } catch (error) {}
   };
   // useEffect(() => {
   //   getNotes()
   // }, [])
 
-  const lastNote = getLastNote(notes)
-  
+  const lastNote = getLastNote(notes);
+
   return (
-    <>
-      <h1>
-        Hello <strong>{user?.username}</strong>
-      </h1>
-      <h2>Last note received:</h2>
-      <Note note={lastNote} onClickEvent="openNotesPage"/>
-      <h2>Our Countdowns</h2>
+    <main className={HomeStyles.HomePage}>
+      <section className={HomeStyles.Greeting}>
+        <h1>
+          Hello, <strong>{user?.partnername}</strong>
+        </h1>
+      </section>
+      <section className={HomeStyles.NotesSection}>
+        <h4>Last note received:</h4>
+        <Note note={lastNote} onClickEvent="openNotesPage" />
+      </section>
+      <section className={HomeStyles.CountdownsSection}>
+        <h4>Our Countdowns</h4>
+      </section>
       {/* <p>{JSON.stringify(notes)}</p> */}
       <Button onClick={handleLogOut}>Log out</Button>
-    </>
+    </main>
   );
 }

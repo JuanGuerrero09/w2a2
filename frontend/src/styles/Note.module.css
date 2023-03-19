@@ -1,7 +1,36 @@
 .noteCard {
     background-color: cornsilk;
     color: #000;
+    width: 281px;
+    height: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
 }
+
+.cardTitle{
+    display: flex;
+    justify-content: space-between;
+}
+
+.noteModal{
+    background-color: cornsilk;
+    color: #000;
+}
+
+.notePageTitle{
+    margin-bottom: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 80vw;
+}
+
+.notesContainer{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 1rem;
+}   
 
 .cardBody{
     overflow: hidden;

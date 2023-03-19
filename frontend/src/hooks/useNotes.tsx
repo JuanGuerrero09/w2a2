@@ -37,8 +37,10 @@ export function useNotes() {
     }
   }
 
-  async function deleteNote() {
+  async function deleteNote(noteId:string) {
     try {
+      await Api.deleteNote(noteId)
+      setNotes(notes?.filter(note => note._id !== noteId))
     } catch (error) {
       console.error(error);
       setNotes(null);
