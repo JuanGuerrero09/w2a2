@@ -11,6 +11,7 @@ import { AppContext } from "../context/AppContext";
 export interface SignUpFields {
   username: string;
   email: string;
+  partnername: string
   password: string;
 }
 
@@ -48,6 +49,14 @@ export default function SignUpPage() {
             placeholder="Username"
             register={register}
             error={errors.username}
+            registerOptions={{ required: true }}
+            type="text"
+          />
+          <FormInputField
+            name="partnername"
+            placeholder="How does your partner call you?"
+            register={register}
+            error={errors.partnername}
             registerOptions={{ required: true }}
             type="text"
           />
