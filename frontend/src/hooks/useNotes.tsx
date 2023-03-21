@@ -20,7 +20,7 @@ export function useNotes() {
   async function createNote(note: NoteModel) {
     try {
       const noteCreated = await Api.createNote(note);
-      setNotes(notes => [...notes as NoteModel[], noteCreated])
+      setNotes(notes => notes ? [...notes, noteCreated] : [noteCreated])
     } catch (error) {
         console.error(error);
         setNotes(null);
@@ -55,5 +55,5 @@ export function useNotes() {
     }
   }
 
-  return { notes, getNotes, deleteNote };
+  return { notes, getNotes, deleteNote, createNote, updateNote };
 }

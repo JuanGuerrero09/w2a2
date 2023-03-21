@@ -30,11 +30,11 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          {/* <Route path="/" element={!user ? <WelcomePage /> : <Home />} />
+          <Route path="/" element={!user ? <WelcomePage /> : <Home />} />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/login" element={<LoginPage />} /> */}
-          {/* <Route path="/home" element={user ? <Home /> : <WelcomePage />} /> */}
-          <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/home" element={user ? <Home /> : <WelcomePage />} />
+          {/* <Route path="/home" element={<Home />} /> */}
           <Route path="/notes" element={<NotesPage />} />
         </Routes>
       </BrowserRouter>
