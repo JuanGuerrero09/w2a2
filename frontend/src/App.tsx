@@ -23,7 +23,7 @@ function App() {
 
   useEffect(() => {
     getLoggedUser()
-    // getNotes();
+    user ?? getNotes();
   }, []);
 
   return (
