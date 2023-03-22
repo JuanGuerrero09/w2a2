@@ -69,8 +69,9 @@ export default function Note({ note, onClickEvent }: NoteProps) {
               }}
               />
               <MdDelete
-                onClick={(e) => {
+                onClick={async (e) => {
                   console.log("note clicked" + _id);
+                  await deleteNote(_id)
                   e.stopPropagation();
                 }}
               />
@@ -83,6 +84,7 @@ export default function Note({ note, onClickEvent }: NoteProps) {
 
       <AddEditNoteModal
         isEditing
+        id={_id}
         handleClose={handleClose}
         show={isEditing}
         text={text}

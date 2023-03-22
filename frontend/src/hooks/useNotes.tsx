@@ -35,6 +35,8 @@ export function useNotes() {
 
   async function updateNote({noteId, note}: UpdateNoteParams) {
     try {
+      console.log(note)
+      console.log(noteId)
       const noteUpdated = await Api.updateNote(noteId, note)
       setNotes(notes?.map(existingNote => existingNote._id === noteUpdated._id ? noteUpdated : existingNote))
     } catch (error) {
@@ -46,6 +48,7 @@ export function useNotes() {
 
   async function deleteNote(noteId:string) {
     try {
+      console.log(noteId)
       await Api.deleteNote(noteId)
       setNotes(notes?.filter(note => note._id !== noteId))
     } catch (error) {

@@ -8,6 +8,7 @@ import { AppContext } from "../../context/AppContext";
 import { NoteInput } from "../../network/api";
 
 interface AddEditNoteModalProps extends ModalProps {
+  id: string
   isEditing?: boolean;
 }
 
@@ -20,6 +21,7 @@ export default function AddEditNoteModal({
   title,
   text,
   show,
+  id,
   handleClose,
   isEditing,
 }: AddEditNoteModalProps) {
@@ -34,12 +36,14 @@ export default function AddEditNoteModal({
         text: text || "",
     }
 });
-  const { createNote } = useContext(AppContext);
-
+  const { createNote, updateNote } = useContext(AppContext);
+  
   const onSubmit = async (data: AddEditNoteField) => {
     try {
-      await createNote(data);
-      // navigate("/home");
+      console.log(id, data)
+      isEditing 
+      ? await updateNote({noteId: id, note: data})
+      : await createNote(data);
     } catch (error) {}
   };
 

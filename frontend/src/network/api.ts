@@ -82,7 +82,7 @@ export async function createNote(note: NoteInput): Promise<NoteModel>{
 }
 
 export async function updateNote(noteId: string ,note: NoteInput): Promise<NoteModel>{
-    const response = await fetchData(`api/users/signup/${noteId}`, {
+    const response = await fetchData(`api/notes/${noteId}`, {
         method: 'PATCH',
         headers: {
             "Content-Type": "application/json",
