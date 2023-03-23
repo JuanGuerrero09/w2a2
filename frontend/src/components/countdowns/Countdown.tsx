@@ -1,43 +1,72 @@
-import React, { useState } from 'react';
-import {Carousel, Card} from 'react-bootstrap';
+import React, { useState } from "react";
+import { Carousel, Card } from "react-bootstrap";
+import CountdownInner from "react-countdown";
+import CountdownStyles from "../../styles/Countdown.module.css";
+
+interface CountdownProps {
+  title: string;
+  countdown: string;
+}
+
+const mockCarouselItems: CountdownProps[] = [
+  {
+    title: "Hola",
+    countdown: "Ya",
+  },
+  {
+    title: "Hola 2",
+    countdown: "Ya",
+  },
+  {
+    title: "Hola 3",
+    countdown: "Ya",
+  },
+];
+
+const InnerCarousel = ({ title, countdown }: CountdownProps) => {
+  return (
+    <>
+      <Carousel.Item>
+        <Card className={`p-4 ${CountdownStyles.CountdownCard}`}>
+          <h2>{title}</h2>
+          <p>{countdown}</p>
+        </Card>
+      </Carousel.Item>
+    </>
+  );
+};
 
 export default function Countdown() {
   const [index, setIndex] = useState(0);
+  const iLeave = new Date('04/05/2023')
 
   const handleSelect = (selectedIndex: number) => {
     setIndex(selectedIndex);
   };
 
   return (
-    <Carousel variant="dark" activeIndex={index} onSelect={handleSelect}>
-      <Carousel.Item>
-        <Card className='p-5' >
-        <h1>I'm a carousel example</h1>
-
+    // <Carousel fade variant="dark" activeIndex={index} onSelect={handleSelect}>
+    //   <Carousel.Item>
+        <Card className={`p-4 ${CountdownStyles.CountdownCard}`}>
+          <h2>{mockCarouselItems[0].title}</h2>
+          <CountdownInner date={iLeave} />
         </Card>
-        <Carousel.Caption>
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <h1>I'm a carousel example</h1>
-
-        <Carousel.Caption>
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <h1>I'm a carousel example</h1>
-
-        <Carousel.Caption>
-          <h3>Third slide label</h3>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
-        </Carousel.Caption>
-      </Carousel.Item>
-    </Carousel>
+    //   </Carousel.Item>
+    //   <Carousel.Item>
+    //     <Card className={`p-4 ${CountdownStyles.CountdownCard}`}>
+    //       <h2>{mockCarouselItems[1].title}</h2>
+    //       <p>{mockCarouselItems[1].countdown}</p>
+    //     </Card>
+    //   </Carousel.Item>
+    //   <Carousel.Item>
+    //     <Card className={`p-4 ${CountdownStyles.CountdownCard}`}>
+    //       <h2>{mockCarouselItems[2].title}</h2>
+    //       <p>{mockCarouselItems[2].countdown}</p>
+    //     </Card>
+    //   </Carousel.Item>
+    //   {/* {mockCarouselItemsCarouselItems?.map((item:CountdownProps) => {
+    //     return (<InnerCarousel countdown={item.countdown} title={item.title} key={item.title}/> )
+    //   })} */}
+    // </Carousel>
   );
 }

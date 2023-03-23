@@ -7,6 +7,7 @@ import { NoteModel } from "../models/note";
 import { getLastNote } from "../utils/dateFunctions";
 import HomeStyles from "../styles/Home.module.css";
 import Countdown from "../components/countdowns/Countdown";
+import CanvasSketch from "../components/canvas/CanvasSketch";
 
 const firstNote: NoteModel = {
   title: "Hi! Create your first note here!",
@@ -46,6 +47,10 @@ export default function Home() {
       <section className={HomeStyles.CountdownsSection}>
         <h4>Our Countdowns</h4>
         <Countdown />
+      </section>
+      <section>
+        <h4>Canvas</h4>
+        <CanvasSketch />
       </section>
       {/* <p>{JSON.stringify(notes)}</p> */}
       <Button onClick={handleLogOut}>Log out</Button>

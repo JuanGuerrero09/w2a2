@@ -18,12 +18,12 @@ export default function NoteModal({title, text, show, handleClose}: ModalProps) 
         </Modal.Header>
         <Modal.Body className={`${styles.noteModal}`}>{text}</Modal.Body>
         <Modal.Footer className={`${styles.noteModal}`}>
-          <Button variant="secondary" onClick={handleClose}>
+          {/* <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
           <Button variant="primary" onClick={handleClose}>
             Save Changes
-          </Button>
+          </Button> */}
         </Modal.Footer>
       </Modal>
   )
