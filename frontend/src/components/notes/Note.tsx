@@ -70,9 +70,9 @@ export default function Note({ note, onClickEvent }: NoteProps) {
               />
               <MdDelete
                 onClick={async (e) => {
-                  console.log("note clicked" + _id);
-                  await deleteNote(_id)
                   e.stopPropagation();
+                  console.log("note clicked " + _id);
+                  await deleteNote(_id)
                 }}
               />
             </aside>

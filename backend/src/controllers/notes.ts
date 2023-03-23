@@ -106,6 +106,7 @@ export const updateNote: RequestHandler<UpdateNoteParams, unknown, UpdateNoteBod
 
 export const deleteNote: RequestHandler = async (req, res, next) => {
     const noteId = req.params.noteId
+    console.log(noteId)
     // const authenticatedUserId = req.session.userId;
 
     try {

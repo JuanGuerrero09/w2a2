@@ -1,12 +1,8 @@
 import { useContext, useEffect } from "react";
 import { Button } from "react-bootstrap";
-import {
-    BrowserRouter,
-    Route,
-    Routes
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Counter from "./components/counters/Counter";
+import Counter from "./components/countdowns/CountdownEx";
 import { AppContext } from "./context/AppContext";
 import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
@@ -15,15 +11,14 @@ import WelcomePage from "./pages/WelcomePage";
 import NotesPage from "./pages/NotesPage";
 
 function App() {
-  const { user, getLoggedUser, notes, getNotes } = useContext(AppContext);
+  const { user, getLoggedUser, notes } = useContext(AppContext);
 
   const handleShowUser = () => {
     console.log(user, notes);
   };
 
   useEffect(() => {
-    getLoggedUser()
-    user ?? getNotes();
+    user ?? getLoggedUser();
   }, []);
 
   return (
