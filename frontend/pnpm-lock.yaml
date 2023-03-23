@@ -14,6 +14,7 @@ specifiers:
   react-hook-form: ^7.43.5
   react-icons: ^4.8.0
   react-router-dom: ^6.9.0
+  react-sketch-canvas: ^6.2.0
   typescript: ^4.9.3
   vite: ^4.1.0
   wouter: ^2.10.0
@@ -29,6 +30,7 @@ dependencies:
   react-hook-form: 7.43.5_react@18.2.0
   react-icons: 4.8.0_react@18.2.0
   react-router-dom: 6.9.0_biqbaboplfbrettd7655fr4n2y
+  react-sketch-canvas: 6.2.0_react@18.2.0
   wouter: 2.10.0_react@18.2.0
 
 devDependencies:
@@ -768,6 +770,15 @@ packages:
       react: '>=16.8'
     dependencies:
       '@remix-run/router': 1.4.0
+      react: 18.2.0
+    dev: false
+
+  /react-sketch-canvas/6.2.0_react@18.2.0:
+    resolution: {integrity: sha512-Z56RQN0viV9W3Y+DpZfQMi2lf3pO+UB4l+cMwnx7j7pQ9WHkQwN+qZKVFGANgpjXQMyY42NODF/DXjuKPCMf1w==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16.8'
+    dependencies:
       react: 18.2.0
     dev: false
 

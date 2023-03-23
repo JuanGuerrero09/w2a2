@@ -20,6 +20,7 @@
     "react-hook-form": "^7.43.5",
     "react-icons": "^4.8.0",
     "react-router-dom": "^6.9.0",
+    "react-sketch-canvas": "^6.2.0",
     "wouter": "^2.10.0"
   },
   "devDependencies": {
