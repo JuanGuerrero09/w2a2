@@ -12,9 +12,10 @@ import NotesPage from "./pages/NotesPage";
 import CanvasPage from "./pages/CanvasPage";
 
 function App() {
-  const { user, getLoggedUser, notes } = useContext(AppContext);
+  const { user, getLoggedUser, notes, getNotes } = useContext(AppContext);
 
-  const handleShowUser = () => {
+  const handleShowUser = async () => {
+    await getNotes()
     console.log(user, notes);
   };
 
@@ -28,10 +29,10 @@ function App() {
         <Routes>
           {/* <Route path="/" element={!user ? <WelcomePage /> : <Home />} />
           <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/home" element={user ? <Home /> : <WelcomePage />} /> */}
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/home" element={user ? <Home /> : <WelcomePage />} /> */}
           <Route path="/home" element={<CanvasPage />} />
-          {/* <Route path="/notes" element={<NotesPage />} /> */}
+          <Route path="/notes" element={<NotesPage />} />
         </Routes>
       </BrowserRouter>
       <Button onClick={handleShowUser}>Show user</Button>
