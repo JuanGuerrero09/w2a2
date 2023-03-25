@@ -5,6 +5,7 @@ import "dotenv/config";
 import NoteModel from './models/note'
 import notesRoutes from './routes/notes';
 import userRoutes from './routes/users';
+import drawRoutes from './routes/draws'
 import session from 'express-session';
 import MongoStore from 'connect-mongo'
 
@@ -31,6 +32,7 @@ app.use(session({
 
 app.use('/api/notes', notesRoutes)
 app.use('/api/users', userRoutes)
+app.use('/api/draws', drawRoutes)
 
 //Error handler
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
