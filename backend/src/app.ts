@@ -2,7 +2,6 @@ import express, { NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
 import "dotenv/config";
-import NoteModel from './models/note'
 import notesRoutes from './routes/notes';
 import userRoutes from './routes/users';
 import drawRoutes from './routes/draws'

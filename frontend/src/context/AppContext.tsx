@@ -1,6 +1,7 @@
 import { createContext } from "react";
 import { useUser } from "../hooks/useUser";
 import { useNotes } from "../hooks/useNotes";
+import { useDraws } from "../hooks/useDraws";
 
 //TODO IMPLEMENT THIS IF APP SCALE
 // const initialState:AppState = {
@@ -18,6 +19,7 @@ type Props = {
 export default function AppProvider({ children }: Props) {
   const { user, error, login, logout, signUp, getLoggedUser } = useUser();
   const { notes, getNotes, deleteNote, createNote, updateNote } = useNotes();
+  const drawsContext = useDraws()
 
   return (
     <AppContext.Provider
@@ -32,7 +34,8 @@ export default function AppProvider({ children }: Props) {
         getNotes,
         deleteNote,
         createNote,
-        updateNote
+        updateNote,
+        drawsContext
       }}
     >
       {children}

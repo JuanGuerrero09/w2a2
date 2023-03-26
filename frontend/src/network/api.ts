@@ -1,5 +1,6 @@
 import { UserModel} from '../models/user'
 import { NoteModel } from '../models/note'
+import { DrawModel } from '../models/draw'
 
 
 async function fetchData(input: RequestInfo, init?: RequestInit) {
@@ -94,4 +95,31 @@ export async function updateNote(noteId: string ,note: NoteInput): Promise<NoteM
 
 export async function deleteNote(noteId: string){
     await fetchData("/api/notes/" + noteId, { method: "POST" });
+}
+
+export async function getDraws(): Promise<DrawModel[]>{
+    const response = await fetchData('api/draws', {
+        method: 'GET'
+    })
+    return response.json()
+}
+
+export interface DrawInput {
+    img: string,
+}
+
+export async function createDraw(draw: DrawInput): Promise<DrawModel>{
+    const response = await fetchData('api/draws/', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(draw),
+    })
+    return response.json()
+}
+
+
+export async function deleteDraw (drawId: string){
+    await fetchData("/api/draws/" + drawId, { method: "POST" });
 }

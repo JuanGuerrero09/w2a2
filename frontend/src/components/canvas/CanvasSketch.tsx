@@ -1,14 +1,23 @@
 import { ReactSketchCanvas, ReactSketchCanvasRef } from "react-sketch-canvas";
 import { Button, ButtonGroup, Form } from "react-bootstrap";
 import CanvasStyles from "../../styles/Canvas.module.css";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useRef, useState } from "react";
+import { AppContext } from "../../context/AppContext";
+import { DrawModel } from "../../models/draw";
 
 export default function CanvasSketch() {
+  const { drawsContext } = useContext(AppContext)
+  const { draws, getDraws, deleteDraw, createDraw } = drawsContext
+  console.log(draws)
   const [strokeSize, setStrokeSize] = useState(15);
   const [canvasSize, setCanvasSize] = useState(400);
   const [color, setColor] = useState("#000");
   const sketch = useRef<ReactSketchCanvasRef>(null);
   const [imgArr, setImgArr] = useState<string[]>([])
+
+  useEffect(() => {
+    getDraws()
+  }, [])
 
   const strokeSizeChange = (e: ChangeEvent<HTMLInputElement>) => {
     const currentValue = Number(e.target.value);
@@ -38,11 +47,12 @@ export default function CanvasSketch() {
     }
   };
 
-  const savePNG = async () => {
-    const draw = sketch.current
-    if (draw !== null) {
-      const imgSaved = await draw.exportImage("png");
-      draw.clearCanvas()
+  const saveIMG = async () => {
+    const drawIMG = sketch.current
+    if (drawIMG !== null) {
+      const imgSaved = await drawIMG.exportImage("png");
+      await createDraw({img: imgSaved})
+      drawIMG.clearCanvas()
       setImgArr([...imgArr, imgSaved])
       console.log(await imgArr)
     }
@@ -61,7 +71,6 @@ export default function CanvasSketch() {
       />
       <Form.Control type="color" onChange={colorChange} />
       <ButtonGroup>
-        <Button onClick={savePNG}>Save Image</Button>
         <Button onClick={undoDraw}>Undo</Button>
         <Button onClick={redoDraw}>Redo</Button>
         <Button onClick={clearCanvas}>Clear</Button>
@@ -76,10 +85,11 @@ export default function CanvasSketch() {
         ref={sketch}
         />
     </section>
+        <Button onClick={saveIMG}>Save Image</Button>
         <h2>Our Drawings</h2>
       <div className={CanvasStyles.ImgSection}>
-      {imgArr.map((img:string) => {
-          return (<img className={CanvasStyles.Img} src={img} width='200px'/>)
+      {draws && draws.map((draw:DrawModel) => {
+          return (<img className={CanvasStyles.Img} src={draw.img} key={draw._id} width='200px'/>)
         })}
       </div>
         </>
