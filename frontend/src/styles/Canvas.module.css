@@ -30,6 +30,23 @@
 .Img{
     border: 0.0625rem solid #9c9c9c;
     border-radius: 0.25rem;
+}
+
+.ImgHolder{
     margin-left: auto;
     margin-right: auto;
+    position: relative;
+    width: 200px;
+}
+
+.Delete{
+    position: absolute;
+    right: 2px;
+    top: 2px;
+}
+
+.CanvasBtnSection{
+    display: flex;
+    gap: 1rem;
+    margin: 0.2rem;
 }
