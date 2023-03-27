@@ -4,10 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import Note from "../components/notes/Note";
 import { NoteModel } from "../models/note";
-import { getLastNote } from "../utils/dateFunctions";
+import { getLastDraw, getLastNote } from "../utils/dateFunctions";
 import HomeStyles from "../styles/Home.module.css";
 import Countdown from "../components/countdowns/Countdown";
 import CanvasSketch from "../components/canvas/CanvasSketch";
+import { DrawModel } from "../models/draw";
+import DrawHolder from "../components/canvas/DrawHolder";
 
 const firstNote: NoteModel = {
   title: "Hi! Create your first note here!",
@@ -17,8 +19,15 @@ const firstNote: NoteModel = {
   updatedAt: "tomorrow",
 };
 
+const firstDraw: DrawModel = {
+  _id: '420',
+  createdAt: 'today', 
+  img: '',
+}
+
 export default function Home() {
-  const { user, logout, getNotes, notes } = useContext(AppContext);
+  const { user, logout, getNotes, notes, drawsContext } = useContext(AppContext);
+  const { draws, getDraws } = drawsContext;
   const navigate = useNavigate();
   const handleLogOut = async () => {
     try {
@@ -28,10 +37,12 @@ export default function Home() {
   };
 
   useEffect(() => {
-    getNotes()
+    !notes && getNotes()
+    !draws && getDraws()
   }, [])
 
   const lastNote: NoteModel = notes? getLastNote(notes): firstNote;
+  const lastDraw: DrawModel = draws? getLastDraw(draws): firstDraw;
 
   return (
     <main className={HomeStyles.HomePage}>
@@ -40,6 +51,8 @@ export default function Home() {
           Hello, <strong>{user?.partnername}</strong>
         </h1>
       </section>
+      <div className={HomeStyles.Content}>
+
       <section className={HomeStyles.NotesSection}>
         <h4>Last note received:</h4>
         <Note note={lastNote} onClickEvent="openNotesPage" />
@@ -48,10 +61,11 @@ export default function Home() {
         <h4>Our Countdowns</h4>
         <Countdown />
       </section>
-      <section>
-        <h4>Canvas</h4>
-        <CanvasSketch />
+      <section className={HomeStyles.CountdownsSection}>
+        <h4>Our Draws</h4>
+        <DrawHolder draw={lastDraw} />
       </section>
+      </div>
       {/* <p>{JSON.stringify(notes)}</p> */}
       <Button onClick={handleLogOut}>Log out</Button>
     </main>

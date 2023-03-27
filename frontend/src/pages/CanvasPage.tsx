@@ -4,13 +4,14 @@ import CanvasStyles from "../styles/Canvas.module.css";
 import { AppContext } from "../context/AppContext";
 import { DrawModel } from "../models/draw";
 import { MdDelete } from "react-icons/md";
+import DrawHolder from "../components/canvas/DrawHolder";
 
 export default function CanvasPage() {
   const { drawsContext } = useContext(AppContext);
-  const { draws, getDraws, deleteDraw } = drawsContext;
+  const { draws, getDraws } = drawsContext;
 
   useEffect(() => {
-    getDraws();
+    !draws && getDraws();
   }, []);
 
   return (
@@ -21,17 +22,7 @@ export default function CanvasPage() {
         {draws &&
           draws.map((draw: DrawModel) => {
             return (
-              <div className={CanvasStyles.ImgHolder}>
-                <img
-                  className={CanvasStyles.Img}
-                  src={draw.img}
-                  key={draw._id}
-                  width="200px"
-                ></img>
-                <MdDelete className={CanvasStyles.Delete} onClick={() => {
-                  deleteDraw(draw._id)
-                }} color="red"/>
-              </div>
+              <DrawHolder draw={draw} withDelete/>
             );
           })}
       </div>

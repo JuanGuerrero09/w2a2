@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Counter from "../components/countdowns/CountdownEx";
 import Note from "../components/notes/Note";
 import { NoteModel } from "../models/note";
@@ -12,7 +12,10 @@ const partner = {
 };
 
 export default function NotesPage() {
-  const { notes } = useContext(AppContext);
+  const { notes, getNotes } = useContext(AppContext);
+  useEffect(() => {
+    !notes && getNotes();
+  }, []);
   return (
     <main>
       <h2 className={NoteStyles.notePageTitle}>
