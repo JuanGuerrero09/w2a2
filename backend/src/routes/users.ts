@@ -12,4 +12,6 @@ router.post('/logout', UserController.logout)
 
 router.post('/addpartner', UserController.addPartner)
 
+router.post('/removepartner', UserController.removePartner)
+
 export default router

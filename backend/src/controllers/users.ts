@@ -28,6 +28,7 @@ export const signUp: RequestHandler<unknown, unknown, SignUpBody, unknown> =asyn
     const username = req.body.username
     const email = req.body.email
     const password = req.body.password
+    const partnername = req.body.partnername
 
     try {
         if (!username || !email || !password){
@@ -46,6 +47,7 @@ export const signUp: RequestHandler<unknown, unknown, SignUpBody, unknown> =asyn
         const newUser = await UserModel.create({
             username,
             email,
+            partnername,
             password: cryptedPassword,
         })
 
@@ -101,12 +103,48 @@ interface PartnerBody{
 }
 //TODO PENDIENTE PARA TERMINAR 
 export const addPartner: RequestHandler<unknown, unknown, PartnerBody, unknown> = async (req, res, next) => {
-    // const partnerUsername = req.body.partnerUsername
-    // const currentUserId = req.session.userId
+    const partnerUsername = req.body.partnerUsername
+    const currentUserId = req.session.userId
     try {
-        // const user = await UserModel.findById(currentUserId).exec()
-        // const partner = await UserModel.find({username: partnerUsername}).exec()
+        const user = await UserModel.findById(currentUserId).exec()
+        const partner = await UserModel.findOne({username: partnerUsername}).exec()
+        if (!partner) {
+            throw createHttpError(404, "User not found");
+        }
+        if (!user) {
+            throw createHttpError(404, "User not found");
+        }
+        if (user.partner) {
+            throw createHttpError(404, "User already has partner");
+        }
         // const updatedUser = {...user, partner: partner}
+        user.partner = partner._id
+        partner.partner = currentUserId
+
+        await user.save()
+        await partner.save()
+
+        const userandpartner = {user, partner}
+        res.status(201).json(userandpartner)
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const removePartner: RequestHandler = async (req, res, next) => {
+    const currentUserId = req.session.userId
+    try {
+        const user = await UserModel.findById(currentUserId).exec()
+        if (!user) {
+            throw createHttpError(404, "User not found");
+        }
+        if (!user.partner) {
+            throw createHttpError(404, "User doesn't have partner");
+        }
+        // const updatedUser = {...user, partner: partner}
+        user.partner = undefined
+        const userUpdated = await user.save()
+        res.status(201).json(userUpdated)
     } catch (error) {
         next(error)
     }
