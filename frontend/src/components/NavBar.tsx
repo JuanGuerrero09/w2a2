@@ -3,8 +3,11 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
 import WorldIcon from './icons/WorldIcon';
+import { useContext } from 'react';
+import { AppContext } from '../context/AppContext';
 
 export default function NavBar() {
+  const {logout} = useContext(AppContext)
   return (
     <Navbar sticky="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
@@ -15,6 +18,7 @@ export default function NavBar() {
             <Nav.Link as={NavLink} to='/home'>Home</Nav.Link>
             <Nav.Link as={NavLink} to='/notes'>Notes</Nav.Link>
             <Nav.Link as={NavLink} to='/draws'>Draws</Nav.Link>
+            <Nav.Link as={NavLink} to='/' onClick={logout}>Log out</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

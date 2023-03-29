@@ -40,9 +40,8 @@ export default function Home() {
     !notes && getNotes()
     !draws && getDraws()
   }, [])
-
-  const lastNote: NoteModel = notes? getLastNote(notes): firstNote;
-  const lastDraw: DrawModel = draws? getLastDraw(draws): firstDraw;
+  const lastNote: NoteModel = notes?.length > 0 ? getLastNote(notes): firstNote;
+  const lastDraw: DrawModel = draws?.length > 0 ? getLastDraw(draws): firstDraw;
 
   return (
     <main className={HomeStyles.HomePage}>
