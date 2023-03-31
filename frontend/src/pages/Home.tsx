@@ -17,6 +17,7 @@ const firstNote: NoteModel = {
   title: "Hi! Create your first note here!",
   text: "Click to go to the notes page",
   _id: "213121",
+  author: 'user',
   createdAt: "today",
   updatedAt: "tomorrow",
 };

@@ -19,10 +19,11 @@ interface NoteProps {
 }
 
 export default function Note({ note, onClickEvent }: NoteProps) {
-  const { title, text, createdAt, updatedAt, _id } = note;
-  const { deleteNote } = useContext(AppContext);
+  const { title, text, createdAt, updatedAt, _id, author } = note;
+  const { deleteNote, partner } = useContext(AppContext);
   const [show, setShow] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const partnerId = partner? partner._id : null
 
   const handleClose = () => {
     setShow(false)
@@ -51,11 +52,13 @@ export default function Note({ note, onClickEvent }: NoteProps) {
       }
     };
 
+
   return (
     <>
       <Card
         onClick={onClickHandler(onClickEvent)}
         className={`${styles.noteCard}`}
+        border={author === partnerId? 'danger' : 'primary'}
       >
         <Card.Body className={styles.cardBody}>
           <Card.Title className={styles.cardTitle}>
@@ -77,6 +80,7 @@ export default function Note({ note, onClickEvent }: NoteProps) {
               />
             </aside>
           </Card.Title>
+          <p>{author}</p>
           <Card.Text className={styles.cardText}>{text}</Card.Text>
         </Card.Body>
         <Card.Footer className="text-muted">{createdUpdatedText}</Card.Footer>

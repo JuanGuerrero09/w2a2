@@ -4,6 +4,7 @@ import * as NoteController from '../controllers/notes'
 const router = express.Router()
 
 router.get('/', NoteController.getNotes)
+router.get('/sharedNotes', NoteController.getSharedNotes)
 router.post('/', NoteController.createNote)
 router.post('/:noteId', NoteController.deleteNote)
 router.patch('/:noteId', NoteController.updateNote)

@@ -94,6 +94,13 @@ export async function getNotes(): Promise<NoteModel[]>{
     return response.json()
 }
 
+export async function getSharedNotes(): Promise<NoteModel[]>{
+    const response = await fetchData('api/notes/sharedNotes', {
+        method: 'GET'
+    })
+    return response.json()
+}
+
 export interface NoteInput {
     title: string,
     text?: string

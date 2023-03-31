@@ -9,7 +9,9 @@ export function useNotes() {
   async function getNotes() {
     try {
       const userNotes = await Api.getNotes();
-      setNotes(userNotes);
+      const partnerNotes = await Api.getSharedNotes()
+      const allNotes = [...userNotes, ...partnerNotes]
+      setNotes(allNotes);
     } catch (error) {
       console.error(error);
       setNotes(null);
