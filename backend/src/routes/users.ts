@@ -10,6 +10,8 @@ router.post('/login', UserController.login)
 
 router.post('/logout', UserController.logout)
 
+router.get('/getpartner', UserController.getPartner)
+
 router.post('/addpartner', UserController.addPartner)
 
 router.post('/removepartner', UserController.removePartner)

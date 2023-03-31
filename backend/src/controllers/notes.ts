@@ -1,14 +1,15 @@
 import { RequestHandler } from "express";
 import NoteModel from '../models/note'
+import UserModel from '../models/user'
 import createHttpError from "http-errors";
 import mongoose from "mongoose";
 
 export const getNotes:RequestHandler = async (req, res, next) => {
 
-    const loggedUserId = req.session?.userId
+    const currentUserId = req.session?.userId
 
     try {
-        const notes = await NoteModel.find({author: loggedUserId}).exec()
+        const notes = await NoteModel.find({author: currentUserId}).exec()
         res.status(200).json(notes)
     } catch (error) {
         next(error)
@@ -17,10 +18,12 @@ export const getNotes:RequestHandler = async (req, res, next) => {
 
 export const getSharedNotes:RequestHandler = async (req, res, next) => {
 
-    const loggedUserId = req.session?.userId
+    const currentUserId = req.session?.userId
 
     try {
-        const notes = await NoteModel.find({sharedWith: loggedUserId}).exec()
+        const user = await UserModel.findById(currentUserId).exec()
+        const partnerId = user?.partnerId
+        const notes = await NoteModel.find({author: partnerId}).exec()
         res.status(200).json(notes)
     } catch (error) {
         next(error)
@@ -68,7 +71,7 @@ export const updateNote: RequestHandler<UpdateNoteParams, unknown, UpdateNoteBod
     const noteId = req.params.noteId
     const newTitle = req.body.title
     const newText = req.body.text
-    // const loggedUserId = req.session.userId
+    // const currentUserId = req.session.userId
 
     try {
 
@@ -86,7 +89,7 @@ export const updateNote: RequestHandler<UpdateNoteParams, unknown, UpdateNoteBod
             throw createHttpError(404, "Note not found");
         }
 
-        // if (!note.author!.equals(loggedUserId)) {
+        // if (!note.author!.equals(currentUserId)) {
         //     throw createHttpError(401, "You cannot access this note");
         // }
 

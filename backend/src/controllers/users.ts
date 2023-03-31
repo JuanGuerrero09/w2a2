@@ -98,6 +98,27 @@ export const login: RequestHandler<unknown, unknown, LoginBody, unknown> = async
     }
 }
 
+export const getPartner: RequestHandler = async (req, res, next) => {
+    const currentUserId = req.session.userId
+    try {
+        if(!currentUserId){
+            throw createHttpError(401, 'User not authenticated')
+        }
+        const user = await UserModel.findById(currentUserId).exec()
+        if (!user) {
+            throw createHttpError(404, "User not found");
+        }
+        const partnerId = user.partnerId
+        const partner = await UserModel.findById(partnerId).exec()
+        if (!partner) {
+            throw createHttpError(404, "Partner not found");
+        }
+        res.status(200).json(partnerId)
+    } catch (error) {
+        next(error)
+    }
+}
+
 interface PartnerBody{
     partnerUsername: string
 }
@@ -114,18 +135,20 @@ export const addPartner: RequestHandler<unknown, unknown, PartnerBody, unknown> 
         if (!user) {
             throw createHttpError(404, "User not found");
         }
-        if (user.partner) {
+        if (user.partnerId) {
             throw createHttpError(404, "User already has partner");
         }
         // const updatedUser = {...user, partner: partner}
-        user.partner = partner._id
-        partner.partner = currentUserId
+        user.partnerId = partner._id
+        user.partnerPartnername = partner.partnername
+        partner.partnerId = currentUserId
+        partner.partnerPartnername = user.partnername
 
         await user.save()
         await partner.save()
 
-        const userandpartner = {user, partner}
-        res.status(201).json(userandpartner)
+        const userAndPartner = {user, partner}
+        res.status(201).json(userAndPartner)
     } catch (error) {
         next(error)
     }
@@ -138,11 +161,11 @@ export const removePartner: RequestHandler = async (req, res, next) => {
         if (!user) {
             throw createHttpError(404, "User not found");
         }
-        if (!user.partner) {
+        if (!user.partnerId) {
             throw createHttpError(404, "User doesn't have partner");
         }
         // const updatedUser = {...user, partner: partner}
-        user.partner = undefined
+        user.partnerId = undefined
         const userUpdated = await user.save()
         res.status(201).json(userUpdated)
     } catch (error) {
