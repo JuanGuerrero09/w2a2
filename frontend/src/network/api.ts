@@ -59,6 +59,34 @@ export async function signUp(credentials: SignUpCredentials){
     return response.json()
 }
 
+export async function getPartner(){
+    const response = await fetchData('api/users/getpartner', {
+        method: 'GET'
+    })
+    return response.json()
+}
+
+interface AddPartnerProps{
+    partnerUsername: string
+}
+
+export async function addPartner(addPartnerProps:AddPartnerProps){
+    const response = await fetchData('api/users/addpartner', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(addPartnerProps),
+    })
+    return response.json()
+}
+export async function removePartner(){
+    const response = await fetchData('api/removepartner', {
+        method: 'GET'
+    })
+    return response.json()
+}
+
 export async function getNotes(): Promise<NoteModel[]>{
     const response = await fetchData('api/notes', {
         method: 'GET'
