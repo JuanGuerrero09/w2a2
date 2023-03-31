@@ -17,14 +17,26 @@ type Props = {
 };
 
 export default function AppProvider({ children }: Props) {
-  const { user, error, login, logout, signUp, getLoggedUser } = useUser();
+  const {
+    user,
+    partner,
+    error,
+    login,
+    logout,
+    signUp,
+    getLoggedUser,
+    addPartner,
+    getPartner,
+    removePartner,
+  } = useUser();
   const { notes, getNotes, deleteNote, createNote, updateNote } = useNotes();
-  const drawsContext = useDraws()
+  const drawsContext = useDraws();
 
   return (
     <AppContext.Provider
       value={{
         user,
+        partner,
         error,
         login,
         logout,
@@ -35,7 +47,10 @@ export default function AppProvider({ children }: Props) {
         deleteNote,
         createNote,
         updateNote,
-        drawsContext
+        addPartner,
+        getPartner,
+        removePartner,
+        drawsContext,
       }}
     >
       {children}

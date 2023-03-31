@@ -113,7 +113,7 @@ export const getPartner: RequestHandler = async (req, res, next) => {
         if (!partner) {
             throw createHttpError(404, "Partner not found");
         }
-        res.status(200).json(partnerId)
+        res.status(200).json(partner)
     } catch (error) {
         next(error)
     }
@@ -146,9 +146,7 @@ export const addPartner: RequestHandler<unknown, unknown, PartnerBody, unknown> 
 
         await user.save()
         await partner.save()
-
-        const userAndPartner = {user, partner}
-        res.status(201).json(userAndPartner)
+        res.status(201).json(partner)
     } catch (error) {
         next(error)
     }
