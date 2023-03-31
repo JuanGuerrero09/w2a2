@@ -1,16 +1,22 @@
 import { useContext, useEffect } from "react";
 import { Button } from "react-bootstrap";
-import { BrowserRouter, Route, Routes, Navigate, useNavigate, RouteProps } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  RouteProps,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import "./App.css";
-import Counter from "./components/countdowns/CountdownEx";
+import NavBar from "./components/NavBar";
 import { AppContext } from "./context/AppContext";
+import CanvasPage from "./pages/CanvasPage";
 import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
+import NotesPage from "./pages/NotesPage";
 import SignUpPage from "./pages/SignUpPage";
 import WelcomePage from "./pages/WelcomePage";
-import NotesPage from "./pages/NotesPage";
-import CanvasPage from "./pages/CanvasPage";
-import NavBar from "./components/NavBar";
 
 interface PrivateRouteProps {
   path: string;
@@ -19,28 +25,46 @@ interface PrivateRouteProps {
 }
 
 function App() {
-  const { user, getLoggedUser, notes, getNotes } = useContext(AppContext);
+  const {
+    user,
+    partner,
+    getPartner,
+    getLoggedUser,
+    notes,
+    getNotes,
+    drawsContext,
+  } = useContext(AppContext);
+  const { draws, getDraws } = drawsContext;
 
   const handleShowUser = async () => {
-    await getNotes()
+    await getNotes();
     console.log(user, notes);
   };
 
   useEffect(() => {
     user ?? getLoggedUser();
-  }, []);
+    !notes && getNotes();
+    !draws && getDraws();
+    !partner && getPartner();
+  }, [user]);
 
   return (
     <>
       <BrowserRouter>
-      {user && <NavBar />}
+        {user && <NavBar />}
         <Routes>
           <Route path="/" element={!user ? <WelcomePage /> : <Home />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/home" element={user ? <Home /> : <WelcomePage />} />
-          <Route path="/notes" element={user ? <NotesPage />: <WelcomePage />} />
-          <Route path="/draws" element={user? <CanvasPage />: <WelcomePage />} />
+          <Route
+            path="/notes"
+            element={user ? <NotesPage /> : <WelcomePage />}
+          />
+          <Route
+            path="/draws"
+            element={user ? <CanvasPage /> : <WelcomePage />}
+          />
         </Routes>
       </BrowserRouter>
       <Button onClick={handleShowUser}>Show user</Button>
@@ -49,7 +73,12 @@ function App() {
   );
 }
 
-function PrivateRoute({ path, element, isAuthenticated, ...rest }: PrivateRouteProps & RouteProps) {
+function PrivateRoute({
+  path,
+  element,
+  isAuthenticated,
+  ...rest
+}: PrivateRouteProps & RouteProps) {
   const navigate = useNavigate();
 
   if (isAuthenticated) {
@@ -59,4 +88,4 @@ function PrivateRoute({ path, element, isAuthenticated, ...rest }: PrivateRouteP
   }
 }
 
-export default App
+export default App;

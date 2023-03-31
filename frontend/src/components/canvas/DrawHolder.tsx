@@ -8,13 +8,14 @@ import { MdDelete } from "react-icons/md";
 interface ImgHolderProps {
     draw: DrawModel,
     withDelete?: boolean
+    onClickEvent?: () => void
 }
 
-export default function DrawHolder({draw, withDelete}: ImgHolderProps) {
+export default function DrawHolder({draw, withDelete, onClickEvent}: ImgHolderProps) {
   const { drawsContext } = useContext(AppContext);
   const {deleteDraw} = drawsContext
   return (
-    <div className={CanvasStyles.ImgHolder}>
+    <div onClick={onClickEvent} className={CanvasStyles.ImgHolder}>
                 <img
                   className={CanvasStyles.Img}
                   src={draw.img}

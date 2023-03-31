@@ -1,23 +1,22 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { AppContext } from "../context/AppContext";
-import Note from "../components/notes/Note";
-import { NoteModel } from "../models/note";
-import { getLastDraw, getLastNote } from "../utils/dateFunctions";
-import HomeStyles from "../styles/Home.module.css";
-import Countdown from "../components/countdowns/Countdown";
-import CanvasSketch from "../components/canvas/CanvasSketch";
-import { DrawModel } from "../models/draw";
-import DrawHolder from "../components/canvas/DrawHolder";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import DrawHolder from "../components/canvas/DrawHolder";
+import Countdown from "../components/countdowns/Countdown";
 import FormInputField from "../components/form/FormInputField";
+import Note from "../components/notes/Note";
+import { AppContext } from "../context/AppContext";
+import { DrawModel } from "../models/draw";
+import { NoteModel } from "../models/note";
+import HomeStyles from "../styles/Home.module.css";
+import { getLastDraw, getLastNote } from "../utils/dateFunctions";
 
 const firstNote: NoteModel = {
   title: "Hi! Create your first note here!",
   text: "Click to go to the notes page",
   _id: "213121",
-  author: 'user',
+  author: "user",
   createdAt: "today",
   updatedAt: "tomorrow",
 };
@@ -33,8 +32,16 @@ interface AddPartnerFields {
 }
 
 export default function Home() {
-  const { user, partner, logout, getNotes, notes, drawsContext, getPartner, addPartner } =
-    useContext(AppContext);
+  const {
+    user,
+    partner,
+    logout,
+    getNotes,
+    notes,
+    drawsContext,
+    getPartner,
+    addPartner,
+  } = useContext(AppContext);
   const { draws, getDraws } = drawsContext;
   const navigate = useNavigate();
   const handleLogOut = async () => {
@@ -44,11 +51,6 @@ export default function Home() {
     } catch (error) {}
   };
 
-  useEffect(() => {
-    !notes && getNotes();
-    !draws && getDraws();
-    !partner && getPartner();
-  }, []);
   const lastNote: NoteModel =
     notes?.length > 0 ? getLastNote(notes) : firstNote;
   const lastDraw: DrawModel =
@@ -64,14 +66,13 @@ export default function Home() {
       partnerUsername: "",
     },
   });
-  console.log(notes)
 
   const onSubmit = async (data: AddPartnerFields) => {
     try {
-      const partner = await addPartner(data)
-      console.log(partner)
+      const partner = await addPartner(data);
+      console.log(partner);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   };
 
@@ -86,7 +87,11 @@ export default function Home() {
         ) : (
           <div>
             <h4>Add Partner</h4>
-            <Form className="d-flex align-items-center" id="addPartnerForm" onSubmit={handleSubmit(onSubmit)}>
+            <Form
+              className="d-flex align-items-center"
+              id="addPartnerForm"
+              onSubmit={handleSubmit(onSubmit)}
+            >
               <FormInputField
                 name="partnerUsername"
                 placeholder={"Write your partner username"}
@@ -95,7 +100,9 @@ export default function Home() {
                 registerOptions={{ required: true }}
                 type="text"
               />
-              <Button className="ml-4" type="submit">Add Partner</Button>
+              <Button className="ml-4" type="submit">
+                Add Partner
+              </Button>
             </Form>
           </div>
         )}
@@ -111,7 +118,7 @@ export default function Home() {
         </section>
         <section className={HomeStyles.CountdownsSection}>
           <h4>{partner ? "Our" : "Your"} Draws</h4>
-          <DrawHolder draw={lastDraw} />
+          <DrawHolder draw={lastDraw} onClickEvent={() => navigate('/draws')} />
         </section>
       </div>
       {/* <p>{JSON.stringify(notes)}</p> */}
