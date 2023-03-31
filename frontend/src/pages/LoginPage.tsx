@@ -50,8 +50,9 @@ export default function LoginPage() {
             error={errors.username}
             registerOptions={{ required: true }}
             type="text"
-          />
+            />
           <FormInputField
+            className={`mt-1 p-2`}
             name="password"
             placeholder="Password"
             register={register}

@@ -55,6 +55,7 @@ export default function SignUpPage() {
           <FormInputField
             name="partnername"
             placeholder="How does your partner call you?"
+            className={`mt-2 p-2`}
             register={register}
             error={errors.partnername}
             registerOptions={{ required: true }}
@@ -62,6 +63,7 @@ export default function SignUpPage() {
           />
           <FormInputField
             name="email"
+            className={`mt-2 p-2`}
             placeholder="Email"
             register={register}
             error={errors.email}
@@ -71,6 +73,7 @@ export default function SignUpPage() {
           <FormInputField
             name="password"
             placeholder="Password"
+            className={`mt-2 p-2`}
             register={register}
             error={errors.password}
             registerOptions={{ required: true }}

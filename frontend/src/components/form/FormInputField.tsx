@@ -21,7 +21,7 @@ export default function FormInputField({
   ...props
 }: FormInputFieldProps) {
   return (
-    <Form.Group className="mt-2" controlId={`${name}-input`}>
+    <Form.Group controlId={`${name}-input`}>
       {label && <Form.Label>{label}</Form.Label>}
       <Form.Control className="p-2" {...props} {...register(name, registerOptions)} isInvalid={!!error}/>
       {extraText && <Form.Text className="text-muted">{extraText}</Form.Text>}

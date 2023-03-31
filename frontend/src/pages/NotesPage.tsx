@@ -7,19 +7,15 @@ import NoteStyles from "../styles/Note.module.css";
 import FloatingButton from "../components/FloatingButton";
 import { AppContext } from "../context/AppContext";
 
-const partner = {
-  partnername: "Kath",
-};
-
 export default function NotesPage() {
-  const { notes, getNotes } = useContext(AppContext);
+  const { notes, getNotes, partner } = useContext(AppContext);
   useEffect(() => {
     !notes && getNotes();
   }, []);
   return (
     <main>
       <h2 className={NoteStyles.notePageTitle}>
-        See all the notes that {partner.partnername} has sent you
+        See all the notes that you {partner? `share with ${partner.partnername}`: 'have'}
       </h2>
       <div className={NoteStyles.notesContainer}>
         {notes?.map((note: NoteModel) => {

@@ -65,6 +65,7 @@ export default function AddEditNoteModal({
           />
           <FormInputField
             name="text"
+            className={`mt-1 p-2`}
             placeholder={isEditing ? text : "Add Text"}
             register={register}
             error={errors.text}
