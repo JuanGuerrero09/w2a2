@@ -25,6 +25,7 @@ const firstDraw: DrawModel = {
   _id: "420",
   createdAt: "today",
   img: "",
+  author: 'me'
 };
 
 interface AddPartnerFields {
@@ -80,10 +81,10 @@ export default function Home() {
     <main className={HomeStyles.HomePage}>
       <section className={HomeStyles.Greeting}>
         <h1>
-          Hello, <strong>{user?.partnername}</strong>
+          Hello, <strong style={{color: 'blue'}}>{user?.partnername}</strong>
         </h1>
         {partner ? (
-          <h4>Current Partner: {partner.partnername}</h4>
+          <h4>Partner: <strong style={{color: 'red'}}>{partner?.partnername}</strong></h4>
         ) : (
           <div>
             <h4>Add Partner</h4>
@@ -112,17 +113,17 @@ export default function Home() {
           <h4>{partner ? "Our" : "Your"} Notes:</h4>
           <Note note={lastNote} onClickEvent="openNotesPage" />
         </section>
-        <section className={HomeStyles.CountdownsSection}>
+        {/* <section className={HomeStyles.CountdownsSection}>
           <h4>{partner ? "Our" : "Your"} Countdowns</h4>
           <Countdown />
-        </section>
+        </section> */}
         <section className={HomeStyles.CountdownsSection}>
-          <h4>{partner ? "Our" : "Your"} Draws</h4>
-          <DrawHolder draw={lastDraw} onClickEvent={() => navigate('/draws')} />
+          <h4>{partner ? "Our" : "Your"} Draws:</h4>
+          {draws? <DrawHolder draw={lastDraw} onClickEvent={() => navigate('/draws')} /> : <h5 onClick={() => navigate('/draws')}>Add one draw! Click here!</h5> }
         </section>
       </div>
       {/* <p>{JSON.stringify(notes)}</p> */}
-      <Button onClick={handleLogOut}>Log out</Button>
+      <Button variant='danger' onClick={handleLogOut}>Remove Partner?</Button>
     </main>
   );
 }

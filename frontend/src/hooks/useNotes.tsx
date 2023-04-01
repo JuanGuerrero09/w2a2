@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NoteModel } from "../models/note";
 import * as Api from "../network/api";
+import { sortArray } from "../utils/sortFunction";
 
 export function useNotes() {
   const [notes, setNotes] = useState<NoteModel[] | null>();
@@ -11,7 +12,8 @@ export function useNotes() {
       const userNotes = await Api.getNotes();
       const partnerNotes = await Api.getSharedNotes()
       const allNotes = [...userNotes, ...partnerNotes]
-      setNotes(allNotes);
+      const sortedNoteArray = sortArray(allNotes)
+      setNotes(sortedNoteArray as NoteModel[])
     } catch (error) {
       console.error(error);
       setNotes(null);
@@ -22,7 +24,9 @@ export function useNotes() {
   async function createNote(note: NoteModel) {
     try {
       const noteCreated = await Api.createNote(note);
-      setNotes(notes => notes ? [...notes, noteCreated] : [noteCreated])
+      const noteArray = notes ? [...notes, noteCreated] : [noteCreated]
+      const sortedNoteArray = sortArray(noteArray)
+      setNotes(sortedNoteArray as NoteModel[])
     } catch (error) {
         console.error(error);
         setNotes(null);

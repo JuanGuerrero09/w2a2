@@ -80,7 +80,6 @@ export default function Note({ note, onClickEvent }: NoteProps) {
               />
             </aside>
           </Card.Title>
-          <p>{author}</p>
           <Card.Text className={styles.cardText}>{text}</Card.Text>
         </Card.Body>
         <Card.Footer className="text-muted">{createdUpdatedText}</Card.Footer>
