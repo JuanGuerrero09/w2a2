@@ -8,7 +8,7 @@ import { AppContext } from "../../context/AppContext";
 import { NoteInput } from "../../network/api";
 
 interface AddEditNoteModalProps extends ModalProps {
-  id: string
+  id?: string
   isEditing?: boolean;
 }
 
