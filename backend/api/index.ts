@@ -14,6 +14,8 @@ app.use(cors())
 
 app.use(morgan('dev'))
 
+app.set('trust proxy', 1)
+
 app.use(express.json())
 
 app.use(session({

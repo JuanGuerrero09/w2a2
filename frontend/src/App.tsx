@@ -67,7 +67,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
-      {/* <Button onClick={handleShowUser}>Show user</Button> */}
+      <Button onClick={handleShowUser}>Show user</Button>
       {/* <Counter /> */}
     </>
   );
