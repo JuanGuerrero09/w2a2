@@ -18,6 +18,11 @@ app.set('trust proxy', 1)
 
 app.use(express.json())
 
+app.get('/', (req, res) => {
+    res.setHeader("Access-Control-Allow-Credentials", "true")
+    res.send('Api is running..')
+})
+
 app.use(session({
     secret: 'kitkath',
     resave: false,

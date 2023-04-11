@@ -51,6 +51,13 @@ export default function Home() {
       navigate("/");
     } catch (error) {}
   };
+  // TODO ADD REMOVE PARTNER
+  const handleRemovePartner = async () => {
+    try {
+      await logout();
+      navigate("/");
+    } catch (error) {}
+  };
 
   const lastNote: NoteModel =
     notes?.length > 0 ? getLastNote(notes) : firstNote;
