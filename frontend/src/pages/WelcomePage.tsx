@@ -33,7 +33,7 @@ export default function WelcomePage() {
         >
           Log In
         </Button>
-        <Button onClick={handleSignupClick} className="p-3" variant="dark">
+        <Button onClick={handleSignupClick} className="p-3 ml-0" variant="dark">
           Sign Up
         </Button>
       </Container>

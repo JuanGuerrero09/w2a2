@@ -12,6 +12,7 @@
 }
 
 .buttonGroup{
+    padding: 0;
     margin-bottom: 2rem;
     width: 300px;
     display: flex;
